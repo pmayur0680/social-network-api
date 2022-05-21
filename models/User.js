@@ -1,6 +1,4 @@
 const { Schema, model } = require('mongoose');
-// Schema reference: https://mongoosejs.com/docs/schematypes.html
-// Validation reference: https://mongoosejs.com/docs/validation.html
 
 const userSchema = new Schema(
     {
@@ -44,9 +42,9 @@ const userSchema = new Schema(
 userSchema
     .virtual('friendCount')
     .get(function() {
-        return this.friends.length();
+        return this.friends.length;
     })
  
 // Intialize User model
-const User = model('user', userSchema);
-model.exports = User;
+const User = model('User', userSchema);
+module.exports = User;

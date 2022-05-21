@@ -1,13 +1,13 @@
 const { User } = require('../models');
-
 module.exports = {
     // `GET` all users
     getAllUsers(req, res) {
         res.send('`GET` all users');
-    },
-    // `POST` a new user
+    },    
     createUser(req, res) {
-        res.send('`POST` a new user');
+        User.create(req.body)
+        .then((user) => res.json(user))
+        .catch((err) => res.status(500).json(err));
     },
     // `GET` a single user by its `_id` and populated thought and friend data
     getSingleUser(req, res) {
