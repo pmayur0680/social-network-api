@@ -2,8 +2,14 @@ const { User } = require('../models');
 module.exports = {
     // `GET` all users
     getAllUsers(req, res) {
-        res.send('`GET` all users');
+        User.find()
+        .select('-__v')
+        .populate('thoughts') // need to verify later
+        .populate('friends') // need to verify later
+        .then((user) => res.json(user))
+        .catch((err) => res.status(500).json(err));
     },    
+    // `POST` a new user - Done
     createUser(req, res) {
         User.create(req.body)
         .then((user) => res.json(user))
