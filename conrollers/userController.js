@@ -71,9 +71,21 @@ module.exports = {
           )
           .catch((err) => res.status(500).json(err));
     },
-    // `DELETE` to remove a friend from a user's friend list
+    // `DELETE` to remove a friend from a user's friend list - Done
+    // update friends property of user where friends is array, use pull
     deleteUserFriend(req, res) {
-        res.send("`DELETE` to remove a friend from a user's friend list");
-
+        const userId = req.params.userId;
+        const friendId = req.params.friendId;
+        User.findOneAndUpdate(
+            { _id: userId },
+            { $pull: { friends: friendId } },
+            { runValidators: true, new: true }
+          )
+          .then((user) =>         
+          !user
+          ? res.status(400).json({ message: 'No user with that ID' })
+          : res.json(user)
+          )
+          .catch((err) => res.status(500).json(err));
     }
 }
