@@ -76,7 +76,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
      // `POST` to create a reaction stored in a single thought's `reactions` array field
-     createReaction(req, res) {        
+     createReaction(req, res) {             
         Thought.findOneAndUpdate(
             { _id:  req.params.id },
             { $push: { reactions:  req.body } },
@@ -90,7 +90,7 @@ module.exports = {
           : res.json(thought)
           )
           .catch((err) => res.status(500).json(err));
-    },
+    },    
     // `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
     deleteReaction(req, res) {
         const thoughtId = req.params.thoughtId;
