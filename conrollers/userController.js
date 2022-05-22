@@ -1,6 +1,8 @@
 const { User } = require('../models');
+const ObjectId = require('mongodb').ObjectId;
+
 module.exports = {
-    // `GET` all users
+    // `GET` all users - Done
     getAllUsers(req, res) {
         User.find()
         .select('-__v')
@@ -16,8 +18,17 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
     // `GET` a single user by its `_id` and populated thought and friend data
-    getSingleUser(req, res) {
-        res.send('`GET` a single user by its `_id` and populated thought and friend data');
+    getSingleUser(req, res) {        
+        User.findOne({ '_id': req.params.id })
+        .select('-__v')
+        .populate('thoughts') // need to verify later
+        .populate('friends') // need to verify later
+        .then((user) =>         
+        !user
+        ? res.status(400).json({ message: 'No user with that ID' })
+        : res.json(user)
+        )
+        .catch((err) => res.status(500).json(err));
     },
     //  `PUT` to update a user by its `_id`
     updateSingleUser(req, res) {
