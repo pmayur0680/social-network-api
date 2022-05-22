@@ -52,15 +52,28 @@ module.exports = {
     },
     // `DELETE` to remove a thought by its `_id`
     deleteThought(req, res) {
-        Thought.findOneAndDelete({ _id: req.params.id })
+        Thought.findOne({ _id: req.params.id })
         .then((thought) =>         
-        !thought
-        ? res.status(400).json({ message: 'No thought with that ID' })
-        : res.json(thought)
-        )
-        .then(() => res.json({ message: 'Thoughts deleted!' }))
+        {
+            if(!thought)
+            res.status(400).json({ message: 'No thought with that ID' })
+            else
+            {
+                const thoughtId = thought._id;
+                const username = thought.username;
+                Thought.findOneAndDelete({ _id: thoughtId })  
+                .then(() => {
+                    User.findOneAndUpdate(
+                        { username: username },
+                        { $pull: { thoughts: thoughtId } },
+                        { runValidators: true, new: true }
+                      )
+                })    
+                .then(() => res.json({ message: 'Thoughts deleted, user updated!' }))
+            }
+        }        
+        )        
         .catch((err) => res.status(500).json(err));
-
     },
      // `POST` to create a reaction stored in a single thought's `reactions` array field
      createReaction(req, res) {        
