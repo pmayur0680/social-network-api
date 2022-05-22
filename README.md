@@ -18,8 +18,8 @@ You can follow the steps below to install the application on your system.
 
 This application uses Mongoose packages to connect MongoDB database and perform queries.
   ## Usage
-Code Repo: https://github.com/pmayur0680/social-network-api
-Video Walkthrough: https://drive.google.com/file/d/1haUTkbn9xb3JHmEUVyD3DLeb9niW6Grw/view
+Code Repo: https://github.com/pmayur0680/social-network-api <br>
+Video Walkthrough: https://drive.google.com/file/d/1haUTkbn9xb3JHmEUVyD3DLeb9niW6Grw/view<br>
 Following is video walkthrough hosted on Google Drive.<br /><br />
 [<img src="https://user-images.githubusercontent.com/101486770/169696778-7ebd5b11-8e5f-4019-a57f-c14b4a05e811.gif">](https://drive.google.com/file/d/1haUTkbn9xb3JHmEUVyD3DLeb9niW6Grw/view "Social Network API")
   ## License
