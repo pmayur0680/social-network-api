@@ -11,7 +11,7 @@ module.exports = {
         Thought.create( { thoughtText: req.body.thoughtText, username: req.body.username } )
         .then (( {_id} ) => {
             // also update user to push new thought in array
-            return User.findOneAndUpdate(
+            User.findOneAndUpdate(
                 { _id: req.body.userId },
                 { $push: { thoughts: _id }}, 
                 { new: true, runValidators: true }
@@ -22,7 +22,15 @@ module.exports = {
     },
     // `GET` to get a single thought by its `_id`
     getSingleThought(req, res) {
-        res.send('`GET` to get a single thought by its `_id`');
+        Thought.findOne({ _id: req.params.id })
+        .select('-__v')       
+        .populate('reactions') // need to verify later
+        .then((thought) =>         
+        !thought
+        ? res.status(400).json({ message: 'No thought with that ID' })
+        : res.json(thought)
+        )
+        .catch((err) => res.status(500).json(err));
     },
     // `PUT` to update a thought by its `_id`
     updateSingleThought(req, res) {
